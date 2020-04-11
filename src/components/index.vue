@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="index_box">
+      <Loading v-if="isLoading"></Loading>
       <div class="message_box">
         <h4>系统公告</h4>
         <el-menu
@@ -31,10 +32,12 @@
   </div>
 </template>
 <script>
+import Loading from "@/components/component/loading/loading";
 export default {
   data() {
     return {
       messageData: [],
+      isLoading: true,
       messageContent: "",
       dialogVisible: false
     };
@@ -55,7 +58,8 @@ export default {
     getMessage() {
       this.handleGet("/message").then(datas => {
         this.messageData = datas;
-        console.log(datas)
+        console.log(datas);
+        this.isLoading = false;
       });
     },
     handleGet(url) {
@@ -89,6 +93,9 @@ export default {
       this.messageContent = data;
       this.dialogVisible = true;
     }
+  },
+  components: {
+    Loading
   }
 };
 </script>

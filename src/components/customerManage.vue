@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="customer_box">
+      <Loading v-if="isLoading"></Loading>
       <div class="control_box">
         <!-- <div class="search_box">
           <el-input v-model="search" size="mini" placeholder="请输入昵称或账号搜索" />
@@ -462,6 +463,7 @@
 <script>
 import qs from "qs";
 import { mapGetters } from "vuex";
+import Loading from "@/components/component/loading/loading";
 import { formatNotDate, formatDate, cityMatch } from "@/common/js/utils";
 import { options } from "@/common/js/city";
 import Upload from "@/components/component/upload/upload";
@@ -469,6 +471,7 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      isLoading: true,
       disabled: false,
       customersData: [],
       expressData: [],
@@ -682,6 +685,7 @@ export default {
                 this.customersData = customerDatas;
               }
               this.issuingData = issuingArr;
+              this.isLoading = false;
             });
           });
         });
@@ -1004,7 +1008,7 @@ export default {
                 type: "success",
                 duration: 3000
               });
-              console.log(res)
+              console.log(res);
               this.$refs[formName].resetFields();
               this.finished = false;
               this.dialogAddressVisible = false;
@@ -1173,7 +1177,8 @@ export default {
     }
   },
   components: {
-    Upload
+    Upload,
+    Loading
   }
 };
 </script>

@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="orders_box">
+      <Loading v-if="isLoading"></Loading>
       <div class="control_box">
         <div class="search_box">
           <el-input v-model="search" size="mini" placeholder="请输入客服或客户姓名搜索" />
@@ -367,6 +368,7 @@
 <script>
 import qs from "qs";
 import { mapGetters } from "vuex";
+import Loading from "@/components/component/loading/loading";
 import {
   formatNotDate,
   formatDate,
@@ -379,6 +381,7 @@ export default {
   data() {
     return {
       ordersData: [],
+      isLoading: true,
       ordersSearchData: [],
       expressData: [],
       customersDatas: [],
@@ -603,6 +606,7 @@ export default {
               }
               this.ordersSearchData = this.ordersData;
               console.log(this.ordersSearchData);
+              this.isLoading = false;
             });
           });
         });
@@ -1412,7 +1416,8 @@ export default {
     }
   },
   components: {
-    Upload
+    Upload,
+    Loading
   }
 };
 </script>

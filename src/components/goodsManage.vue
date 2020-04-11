@@ -1,16 +1,8 @@
 <template>
   <div>
     <div class="goods_box">
+      <Loading v-if="isLoading"></Loading>
       <div class="control_box">
-        <!-- <div class="search_box">
-          <el-input v-model="search" size="mini" placeholder="请输入昵称或账号搜索" />
-          <el-button
-            size="mini"
-            icon="el-icon-refresh"
-            @click="handleRefresh(scope.$index, scope.row)"
-            circle
-          ></el-button>
-        </div>-->
         <div class="handle_box">
           <el-button icon="el-icon-plus" @click="openAddDialog " round>添加</el-button>
         </div>
@@ -128,11 +120,13 @@
 </template>
 <script>
 import qs from "qs";
+import Loading from "@/components/component/loading/loading";
 import { formatNotDate, formatDate } from "@/common/js/utils";
 export default {
   data() {
     return {
       goodsData: [],
+      isLoading: true,
       search: "",
       currentPage: 1,
       pagesize: 10,
@@ -197,6 +191,7 @@ export default {
         }
         this.goodsData = datas;
         console.log(this.goodsData);
+        this.isLoading = false;
       });
       this.handleGet("/goodstype").then(datas => {
         for (let i = 0; i < datas.length; i++) {
@@ -390,6 +385,9 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event);
     }
+  },
+  components: {
+    Loading
   }
 };
 </script>

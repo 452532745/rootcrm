@@ -1,16 +1,9 @@
 <template>
   <div>
     <div class="user_box">
+      <Loading v-if="isLoading"></Loading>
       <div class="control_box">
-        <div class="search_box">
-          <el-input v-model="search" size="mini" placeholder="请输入昵称或账号搜索" />
-          <!-- <el-button
-            size="mini"
-            icon="el-icon-refresh"
-            @click="handleRefresh(scope.$index, scope.row)"
-            circle
-          ></el-button> -->
-        </div>
+        <div class="search_box"></div>
         <div class="handle_box">
           <el-button icon="el-icon-plus" @click="openAddDialog " round>添加</el-button>
           <el-button icon="el-icon-receiving" @click="exportData()" round>导出</el-button>
@@ -134,11 +127,13 @@
 <script>
 import qs from "qs";
 import { mapGetters } from "vuex";
+import Loading from "@/components/component/loading/loading";
 import { formatNotDate, formatDate } from "@/common/js/utils";
 export default {
   data() {
     return {
       usersData: [],
+      isLoading: true,
       usersSearchData: [],
       search: "",
       currentPage: 1,
@@ -232,6 +227,7 @@ export default {
           this.usersData = datas;
           this.usersSearchData = this.usersData;
           console.log(this.usersData);
+          this.isLoading = false;
         });
       });
 
@@ -523,6 +519,9 @@ export default {
     handleChangeDate(value) {
       this.usersForm.user_state = 0;
     }
+  },
+  components: {
+    Loading
   }
 };
 </script>

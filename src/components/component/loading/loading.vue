@@ -13,7 +13,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    background: rgba(255,255,255,0.5);
+    background: transparent;
     width: 100vw;
     height: 100vh;
     z-index: 1000;

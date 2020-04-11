@@ -113,7 +113,7 @@ export default {
     }
   }
 
-  /deep/ .el-button--mini.is-circle{
+  /deep/ .el-button--mini.is-circle {
     padding: 5px;
   }
 }
