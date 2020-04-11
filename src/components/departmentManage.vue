@@ -9,6 +9,7 @@
         :data="departmentDatas"
         node-key="id"
         :expand-on-click-node="false"
+        :default-expanded-keys="[2]"
       >
         <span class="custom-tree-node" slot-scope="{ node, data }">
           <span>{{ node.label }}</span>
@@ -169,7 +170,7 @@ export default {
           );
         })
         .catch(() => {
-          console.log("取消")
+          console.log("取消");
         });
     },
     // 查询数据弹窗

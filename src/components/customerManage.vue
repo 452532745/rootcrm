@@ -126,7 +126,6 @@
                 <el-table-column label="收件人" prop="express_receiver" sortable></el-table-column>
                 <el-table-column label="联系电话" prop="express_phone" sortable></el-table-column>
                 <el-table-column label="收货地址" prop="express_address_merge" sortable></el-table-column>
-                <el-table-column label="邮政编码" prop="express_postalcode" sortable></el-table-column>
                 <el-table-column label="操作">
                   <template slot-scope="scope">
                     <el-button
@@ -167,9 +166,6 @@
                     </el-form-item>
                     <el-form-item label="联系电话 :" prop="express_phone">
                       <el-input v-model="expressForm.express_phone" placeholder></el-input>
-                    </el-form-item>
-                    <el-form-item label="邮政编码 :" prop="express_postalcode">
-                      <el-input v-model="expressForm.express_postalcode" placeholder></el-input>
                     </el-form-item>
                     <el-form-item label="收货地址 :" prop="express_address_ssx">
                       <el-cascader
@@ -329,7 +325,6 @@
                 <el-table-column label="收件人" prop="express_receiver" sortable></el-table-column>
                 <el-table-column label="联系电话" prop="express_phone" sortable></el-table-column>
                 <el-table-column label="收货地址" prop="express_address_merge" sortable></el-table-column>
-                <el-table-column label="邮政编码" prop="express_postalcode" sortable></el-table-column>
                 <el-table-column label="操作">
                   <template slot-scope="scope">
                     <el-button
@@ -363,9 +358,6 @@
                     </el-form-item>
                     <el-form-item label="联系电话 :" prop="express_phone">
                       <el-input v-model="expressForm.express_phone" placeholder></el-input>
-                    </el-form-item>
-                    <el-form-item label="邮政编码 :" prop="express_postalcode">
-                      <el-input v-model="expressForm.express_postalcode" placeholder></el-input>
                     </el-form-item>
                     <el-form-item label="收货地址 :" prop="express_address_ssx">
                       <el-cascader
@@ -514,7 +506,6 @@ export default {
         express_id: 0,
         express_receiver: "",
         express_phone: "",
-        express_postalcode: "",
         express_address_ssx: "",
         express_address: "",
         customer_id: 0,
@@ -788,7 +779,6 @@ export default {
       const registData = {
         express_receiver: "",
         express_phone: "",
-        express_postalcode: "",
         express_address_ssx: "",
         express_address: "",
         customer_id: 0
@@ -804,7 +794,6 @@ export default {
           const registData = {
             express_receiver: this.expressForm.express_receiver,
             express_phone: this.expressForm.express_phone,
-            express_postalcode: String(this.expressForm.express_postalcode),
             express_address_ssx: this.expressForm.express_address_ssx,
             express_address: this.expressForm.express_address,
             express_address_merge:
@@ -848,7 +837,6 @@ export default {
               express_id: datas[i].express_id,
               express_receiver: datas[i].express_receiver,
               express_phone: datas[i].express_phone,
-              express_postalcode: datas[i].express_postalcode,
               express_address_ssx: datas[i].express_address_ssx,
               express_address: datas[i].express_address,
               express_address_merge:
@@ -973,7 +961,6 @@ export default {
         express_id: 0,
         express_receiver: "",
         express_phone: "",
-        express_postalcode: "",
         express_address_ssx: "",
         express_address: "",
         customer_id: 0
@@ -988,7 +975,6 @@ export default {
         express_id: this.expressForm.express_id,
         express_receiver: this.expressForm.express_receiver,
         express_phone: this.expressForm.express_phone,
-        express_postalcode: this.expressForm.express_postalcode,
         express_address_ssx: this.expressForm.express_address_ssx,
         express_address: this.expressForm.express_address,
         express_address_merge:
@@ -1033,7 +1019,6 @@ export default {
         express_id: data.express_id,
         express_receiver: data.express_receiver,
         express_phone: data.express_phone,
-        express_postalcode: data.express_postalcode,
         express_address_ssx: data.express_address_ssx.split(","),
         express_address: data.express_address,
         customer_id: data.customer_id,
@@ -1047,7 +1032,6 @@ export default {
         express_id: this.expressForm.express_id,
         express_receiver: this.expressForm.express_receiver,
         express_phone: this.expressForm.express_phone,
-        express_postalcode: this.expressForm.express_postalcode,
         express_address_ssx: this.expressForm.express_address_ssx
           ? this.expressForm.express_address_ssx.join(",")
           : 0,

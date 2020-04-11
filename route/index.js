@@ -640,7 +640,7 @@ module.exports = () => {
           arr.push(Object.values(express[i]))
         }
         console.log(express)
-        const insStrs = 'INSERT INTO express(`express_receiver`,`express_phone`,`express_postalcode`, `express_address_ssx`, `express_address`, `customer_id`) VALUES ?'
+        const insStrs = 'INSERT INTO express(`express_receiver`,`express_phone`, `express_address_ssx`, `express_address`, `customer_id`) VALUES ?'
         // 插入用户信息
         db.query(insStrs, [arr], (err, datas) => {
           if (err) {
@@ -948,11 +948,10 @@ module.exports = () => {
     console.log(req.body)
     let express_receiver = mObj.express_receiver
     let express_phone = mObj.express_phone
-    let express_postalcode = mObj.express_postalcode
     let express_address_ssx = mObj.express_address_ssx
     let express_address = mObj.express_address
     let customer_id = mObj.customer_id
-    const insStr = `INSERT INTO express(express_receiver,express_phone,express_postalcode,express_address_ssx,express_address,customer_id) VALUES('${express_receiver}','${express_phone}','${express_postalcode}','${express_address_ssx}','${express_address}','${customer_id}')`
+    const insStr = `INSERT INTO express(express_receiver,express_phone,express_address_ssx,express_address,customer_id) VALUES('${express_receiver}','${express_phone}','${express_address_ssx}','${express_address}','${customer_id}')`
     // 插入用户信息
     db.query(insStr, (err, data) => {
       if (err) {
@@ -968,11 +967,10 @@ module.exports = () => {
     let express_id = req.body.express_id
     let express_receiver = req.body.express_receiver
     let express_phone = req.body.express_phone
-    let express_postalcode = req.body.express_postalcode
     let express_address_ssx = req.body.express_address_ssx
     let express_address = req.body.express_address
 
-    const updateStr = `UPDATE express SET express_receiver='${express_receiver}',express_phone='${express_phone}',express_postalcode='${express_postalcode}',express_address_ssx='${express_address_ssx}',express_address='${express_address}' WHERE express_id='${express_id}'`
+    const updateStr = `UPDATE express SET express_receiver='${express_receiver}',express_phone='${express_phone}',express_address_ssx='${express_address_ssx}',express_address='${express_address}' WHERE express_id='${express_id}'`
 
     new Promise((resolve, reject) => {
       db.query(updateStr, (err, data) => {

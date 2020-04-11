@@ -113,9 +113,6 @@
               <el-form-item label="联系电话 :" prop="express_phone">
                 <el-input v-model="ordersForm.express_phone" :disabled="true" placeholder></el-input>
               </el-form-item>
-              <el-form-item label="邮编/区号 :" prop="express_postalcode">
-                <el-input v-model="ordersForm.express_postalcode" :disabled="true" placeholder></el-input>
-              </el-form-item>
               <el-form-item label="收货地址 :" prop="express_address_all">
                 <el-input
                   type="textarea"
@@ -372,7 +369,7 @@ import Loading from "@/components/component/loading/loading";
 import {
   formatNotDate,
   formatDate,
-  tradeNo,
+  tradeShortNo,
   cityMatch
 } from "@/common/js/utils";
 import { options } from "@/common/js/city";
@@ -420,7 +417,6 @@ export default {
         customer_wechat_qq: "",
         express_receiver: "",
         express_phone: "",
-        express_postalcode: "",
         express_address: "",
         express_address_ssx: "",
         express_address_all: "",
@@ -628,7 +624,6 @@ export default {
         express_id: "",
         express_receiver: "",
         express_phone: "",
-        express_postalcode: "",
         express_address: "",
         express_address_ssx: "",
         express_address_all: "",
@@ -666,7 +661,7 @@ export default {
       let timestamp = new Date().getTime();
       if (this.cacheCodeDatas.length > 0) {
         const registData = {
-          order_number: tradeNo(),
+          order_number: tradeShortNo(),
           user_id: this.user_id,
           order_creattime: timestamp,
           customer_id: this.ordersForm.customer_id,
@@ -675,7 +670,6 @@ export default {
           express_id: this.ordersForm.express_id,
           express_receiver: this.ordersForm.express_receiver,
           express_phone: this.ordersForm.express_phone,
-          express_postalcode: this.ordersForm.express_postalcode,
           express_address: this.ordersForm.express_address,
           order_pay_type: this.ordersForm.order_pay_type,
           order_price: this.ordersForm.order_price,
@@ -772,7 +766,6 @@ export default {
                   : orderPart.customerData[0].customer_qq,
                 express_receiver: orderPart.expressData.express_receiver,
                 express_phone: orderPart.expressData.express_phone,
-                express_postalcode: orderPart.expressData.express_postalcode,
                 express_address_ssx: orderPart.expressData.express_address_ssx,
                 express_address: orderPart.expressData.express_address,
                 express_address_all:
@@ -787,7 +780,8 @@ export default {
                 order_actual_price: data.order_actual_price,
                 order_dai_price: data.order_dai_price,
                 issuing_id: data.issuing_id,
-                order_express_type: data.order_express_type,
+                order_express_type:
+                  data.order_express_type == "" ? "6" : data.order_express_type,
                 order_sale_remarks: data.order_sale_remarks,
                 order_store_remarks: data.order_store_remarks,
                 order_id: data.order_id,
@@ -943,7 +937,6 @@ export default {
       this.ordersForm.express_id = "";
       this.ordersForm.express_receiver = "";
       this.ordersForm.express_phone = "";
-      this.ordersForm.express_postalcode = "";
       this.ordersForm.express_address_ssx = "";
       this.ordersForm.express_address = "";
       this.ordersForm.express_address_all = "";
@@ -966,9 +959,6 @@ export default {
             : "";
           this.ordersForm.express_phone = indexExpress.express_phone
             ? indexExpress.express_phone
-            : "";
-          this.ordersForm.express_postalcode = indexExpress.express_postalcode
-            ? indexExpress.express_postalcode
             : "";
           this.ordersForm.express_address_ssx = indexExpress.express_address_ssx
             ? indexExpress.express_address_ssx
@@ -1006,9 +996,6 @@ export default {
         : "";
       this.ordersForm.express_phone = data.express_phone
         ? data.express_phone
-        : "";
-      this.ordersForm.express_postalcode = data.express_postalcode
-        ? data.express_postalcode
         : "";
       this.ordersForm.express_address_ssx = data.express_address_ssx
         ? data.express_address_ssx
@@ -1200,8 +1187,6 @@ export default {
     },
     // 导出数据
     exportData() {
-      // this.loading = true; //缓冲条加载
-
       //此代码实现向后台异步请求数据
 
       this.handleGet("/order").then(datas => {
@@ -1267,10 +1252,7 @@ export default {
                     }
                   }
 
-                  this.exportList = datas;
-
-                  console.log(this.exportList);
-                  this.export2Excel();
+                  this.export2Excel(datas);
                 });
               });
             });
@@ -1279,17 +1261,15 @@ export default {
       });
     },
     // 导出excel数据
-    export2Excel() {
-      let list = this.exportList;
-
-      for (let i = 0; i < list.length; i++) {
-        list[i].saleDataTxt = "";
-        for (let j = 0; j < list[i].saleData.length; j++) {
-          list[i].saleData[j] =
-            list[i].saleData[j].goods_name +
+    export2Excel(exportList) {
+      for (let i = 0; i < exportList.length; i++) {
+        exportList[i].saleDataTxt = "";
+        for (let j = 0; j < exportList[i].saleData.length; j++) {
+          exportList[i].saleData[j] =
+            exportList[i].saleData[j].goods_name +
             "*" +
-            list[i].saleData[j].sale_quantity;
-          list[i].saleDataTxt += list[i].saleData[j] + ",";
+            exportList[i].saleData[j].sale_quantity;
+          exportList[i].saleDataTxt += exportList[i].saleData[j] + ",";
         }
       }
 
@@ -1336,7 +1316,7 @@ export default {
           "saleData"
         ];
 
-        const data = this.formatJson(filterVal, list);
+        const data = this.formatJson(filterVal, exportList);
 
         export_json_to_excel(tHeader, data, "**报表" + new Date().getTime());
       });

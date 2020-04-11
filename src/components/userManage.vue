@@ -247,7 +247,7 @@ export default {
         user_phone: "",
         user_creattime: "",
         user_deadline: "",
-        user_post: "",
+        user_post: "销售",
         department_id: "",
         user_state: true
       };

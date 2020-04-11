@@ -46,6 +46,7 @@ export const sortByKey = (arr, key) => {
   })
 }
 
+// 生成长订单号
 export const tradeNo = () => {
   const now = new Date()
   const year = now.getFullYear();
@@ -63,6 +64,27 @@ export const tradeNo = () => {
   return 'M' + yyyyMMddHHmmss + Math.random().toString(36).substr(2, 9);
 }
 
+// 生成短订单号
+export const tradeShortNo = () => {
+  const now = new Date()
+  const year = now.getFullYear();
+  let month = now.getMonth() + 1;
+  let day = now.getDate();
+  let hour = now.getHours();
+  let minutes = now.getMinutes();
+  let seconds = now.getSeconds();
+  let mSeconds = now.getTime();
+  String(month).length < 2 ? (month = Number("0" + month)) : month;
+  String(day).length < 2 ? (day = Number("0" + day)) : day;
+  String(hour).length < 2 ? (hour = Number("0" + hour)) : hour;
+  String(minutes).length < 2 ? (minutes = Number("0" + minutes)) : minutes;
+  String(seconds).length < 2 ? (seconds = Number("0" + seconds)) : seconds;
+  mSeconds = String(mSeconds).substr(-1, 3);
+  const yyyyMMddHHmmSSsss = `${year}${month}${day}${hour}${minutes}${seconds}${mSeconds}`;
+  return 'M' + yyyyMMddHHmmSSsss;
+}
+
+// 匹配省市区
 export const cityMatch = (data, options) => {
   let cityArr = typeof data == "object" ? data : data.split(",");
   let cityData = "";
